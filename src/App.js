@@ -5,17 +5,28 @@ import TodoInput from "./components/todoInput";
 import TodoItem from "./components/todoItem";
 
 class App extends Component {
-  state = {
-    todos: [
-      { id: 0, text: "Make dinner tonight" },
-      { id: 1, text: "Fold the laundry" },
-      { id: 2, text: "Learn to make a React application" }
-    ],
-    nextId: 3
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      todos: [
+        { id: 0, text: "Make dinner tonight" },
+        { id: 1, text: "Fold the laundry" },
+        { id: 2, text: "Learn to make a React application" }
+      ],
+      nextId: 3
+    };
+    this.addTodo = this.addTodo.bind(this);
+    this.removeTodo = this.removeTodo.bind(this);
+  }
 
   addTodo(todoText) {
-    console.log("todo added; ", todoText);
+    let todos = this.state.todos.slice();
+    todos.push({ id: this.state.nextId, text: todoText });
+    this.setState({
+      todos: todos,
+      nextId: ++this.state.nextId
+    });
   }
 
   removeTodo(id) {
